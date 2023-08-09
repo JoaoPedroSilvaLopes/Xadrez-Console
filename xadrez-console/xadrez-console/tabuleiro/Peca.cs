@@ -24,6 +24,8 @@ namespace tabuleiro
             return $"{PecaTipoChar}";
         }
 
+        public void AumentarQtdMovimentos() { QtdMovimentos++; }
+
         public abstract void Regras();
     }
 }
