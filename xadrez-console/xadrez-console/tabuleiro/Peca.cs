@@ -1,25 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using tabuleiro.Enum;
+﻿using tabuleiro.Enum;
 
 namespace tabuleiro
 {
-    internal class Peca
+    internal abstract class Peca
     {
         public Posicao Posicao { get; set; }
         public Cor Cor { get; protected set; }
-        public int QtdMovimentos { get; protected set; }
+        public PecaTipo PecaTipo { get; protected set; }
         public Tabuleiro Tab { get; protected set; }
+        public int QtdMovimentos { get; protected set; }
 
-        public Peca(Posicao posicao, Cor cor, Tabuleiro tab)
+        public Peca(Cor cor, Tabuleiro tab)
         {
-            Posicao = posicao;
+            Posicao = null;
             Cor = cor;
             Tab = tab;
             QtdMovimentos = 0;
         }
+
+        public override string ToString()
+        {
+            char PecaTipoChar = (char)PecaTipo;
+            return $"{PecaTipoChar}";
+        }
+
+        public abstract void Regras();
     }
 }

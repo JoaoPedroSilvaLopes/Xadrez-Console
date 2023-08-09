@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using tabuleiro.Exceptions;
 
 namespace tabuleiro
 {
@@ -19,15 +15,40 @@ namespace tabuleiro
             _pecas = new Peca[Linhas, Colunas];
         }
 
-        public static void ImprimirTabuleiro(Tabuleiro tab)
+        public Peca GetPeca(int linha, int coluna)
         {
-            for (int i = 0; i < tab.Linhas; i++ )
+            return _pecas[linha, coluna];
+        }
+
+        public Peca GetPeca(Posicao posicao)
+        {
+            return _pecas[posicao.Linha, posicao.Coluna];
+        }
+        public void ColocarPeca(Peca peca, Posicao posicao)
+        {
+            if (ExistePeca(posicao)) throw new TabuleiroException("Já existe uma peça nessa posição");
+            _pecas[posicao.Linha, posicao.Coluna] = peca;
+            peca.Posicao = posicao;
+        }
+
+        public bool PosicaoValida(Posicao posicao)
+        {
+            if (posicao.Linha < 0 || posicao.Coluna < 0 || posicao.Linha >= Linhas || posicao.Coluna >= Colunas)
             {
-                for ( int j = 0; j < tab.Colunas; j++)
-                {
-                    this._pecas(i, j) != null ? Console.WriteLine($"{_pecas(i, j)} ") : Console.WriteLine("_ ");
-                }
+                return false;
             }
+            return true;
+        }
+
+        public bool ExistePeca(Posicao posicao)
+        {
+            ValidarPosicao(posicao);
+            return _pecas[posicao.Linha, posicao.Coluna] != null;
+        }
+
+        public void ValidarPosicao(Posicao posicao)
+        {
+            if (!PosicaoValida(posicao)) throw new TabuleiroException("Posição Inválida");
         }
     }
 }
